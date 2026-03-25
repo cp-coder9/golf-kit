@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { Ruler, Flag, ShieldCheck, Layers } from 'lucide-react';
+import { Ruler, Flag, ShieldCheck, Layers, Target, Users, Sparkles, LayoutTemplate } from 'lucide-react';
 import Image from 'next/image';
 
 interface KitCardProps {
@@ -14,6 +14,11 @@ interface KitCardProps {
   basePanels: string;
   warranty: string;
   imageSrc: string;
+  description: string;
+  targetAudience: string;
+  shapeAndFeatures: string;
+  suitability: string;
+  keyBenefits: string[];
   index: number;
 }
 
@@ -27,6 +32,11 @@ export function KitCard({
   basePanels,
   warranty,
   imageSrc,
+  description,
+  targetAudience,
+  shapeAndFeatures,
+  suitability,
+  keyBenefits,
   index,
 }: KitCardProps) {
   return (
@@ -35,73 +45,127 @@ export function KitCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.8, delay: index * 0.2 }}
-      className="group relative flex flex-col md:flex-row bg-stone-900 rounded-3xl overflow-hidden border border-stone-800 hover:border-emerald-900/50 transition-colors duration-500"
+      className="group relative flex flex-col bg-stone-900 rounded-3xl overflow-hidden border border-stone-800 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-900/20 hover:-translate-y-1 transition-all duration-500"
     >
-      {/* Image Section */}
-      <div className="relative w-full md:w-2/5 h-64 md:h-auto overflow-hidden">
-        <Image
-          src={imageSrc}
-          alt={name}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-transparent md:bg-gradient-to-r" />
-      </div>
-
-      {/* Content Section */}
-      <div className="flex-1 p-8 md:p-12 flex flex-col justify-center">
-        <div className="mb-6">
-          <h3 className="text-3xl md:text-4xl font-serif text-stone-100 mb-2">
-            {name}
-          </h3>
-          <p className="text-emerald-400 font-mono text-sm tracking-widest uppercase">
-            {sqft} sq ft • {holes} Hole Locations
-          </p>
+      {/* Top Section: Image & Core Specs */}
+      <div className="flex flex-col xl:flex-row border-b border-stone-800">
+        <div className="relative w-full xl:w-1/2 h-80 xl:h-auto overflow-hidden">
+          <Image
+            src={imageSrc}
+            alt={name}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-transparent xl:bg-gradient-to-r" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-          <div className="flex items-start gap-3">
-            <Ruler className="w-5 h-5 text-stone-500 mt-0.5" />
-            <div>
-              <p className="text-stone-400 text-xs uppercase tracking-wider font-semibold mb-1">Dimensions</p>
-              <p className="text-stone-200 font-light">{specs}</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <Flag className="w-5 h-5 text-stone-500 mt-0.5" />
-            <div>
-              <p className="text-stone-400 text-xs uppercase tracking-wider font-semibold mb-1">Turf</p>
-              <p className="text-stone-200 font-light text-sm">
-                <span className="block">Putting: {puttingTurf}</span>
-                <span className="block text-stone-400">Fringe: {fringeTurf}</span>
+        <div className="flex-1 p-8 xl:p-12 flex flex-col justify-center">
+          <div className="mb-6">
+            <h3 className="text-3xl md:text-4xl font-serif text-stone-100 mb-4">
+              {name}
+            </h3>
+            <p className="text-stone-300 font-light leading-relaxed mb-6">
+              {description}
+            </p>
+            <div className="inline-block px-4 py-2 bg-stone-950 rounded-full border border-stone-800">
+              <p className="text-emerald-400 font-mono text-sm tracking-widest uppercase">
+                {sqft} sq ft • {holes} Hole Locations
               </p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3">
-            <Layers className="w-5 h-5 text-stone-500 mt-0.5" />
-            <div>
-              <p className="text-stone-400 text-xs uppercase tracking-wider font-semibold mb-1">Base Panels</p>
-              <p className="text-stone-200 font-light text-sm">{basePanels}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="flex items-start gap-3">
+              <Ruler className="w-5 h-5 text-stone-500 mt-0.5" />
+              <div>
+                <p className="text-stone-400 text-xs uppercase tracking-wider font-semibold mb-1">Dimensions</p>
+                <p className="text-stone-200 font-light">{specs}</p>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 text-stone-500 mt-0.5" />
-            <div>
-              <p className="text-stone-400 text-xs uppercase tracking-wider font-semibold mb-1">Warranty</p>
-              <p className="text-stone-200 font-light text-sm">{warranty}</p>
+            <div className="flex items-start gap-3">
+              <Flag className="w-5 h-5 text-stone-500 mt-0.5" />
+              <div>
+                <p className="text-stone-400 text-xs uppercase tracking-wider font-semibold mb-1">Turf</p>
+                <p className="text-stone-200 font-light text-sm">
+                  <span className="block">Putting: {puttingTurf}</span>
+                  <span className="block text-stone-400">Fringe: {fringeTurf}</span>
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-3">
+              <Layers className="w-5 h-5 text-stone-500 mt-0.5" />
+              <div>
+                <p className="text-stone-400 text-xs uppercase tracking-wider font-semibold mb-1">Base Panels</p>
+                <p className="text-stone-200 font-light text-sm">{basePanels}</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-stone-500 mt-0.5" />
+              <div>
+                <p className="text-stone-400 text-xs uppercase tracking-wider font-semibold mb-1">Warranty</p>
+                <p className="text-stone-200 font-light text-sm">{warranty}</p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="mt-auto">
-          <button className="w-full sm:w-auto px-8 py-3 bg-stone-800 hover:bg-emerald-600 text-stone-100 rounded-full font-medium tracking-wide transition-all duration-300 hover:shadow-[0_0_20px_rgba(5,150,105,0.3)]">
-            Get Pricing
-          </button>
+      {/* Bottom Section: Deep Dive Details */}
+      <div className="p-8 xl:p-12 bg-stone-950/50 group-hover:bg-stone-950/80 transition-colors duration-500 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        {/* Target Audience */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-emerald-500 mb-4">
+            <Users className="w-5 h-5" />
+            <h4 className="font-serif text-lg text-stone-200">Target Audience</h4>
+          </div>
+          <p className="text-stone-400 text-sm font-light leading-relaxed">
+            {targetAudience}
+          </p>
         </div>
+
+        {/* Shape & Features */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-emerald-500 mb-4">
+            <LayoutTemplate className="w-5 h-5" />
+            <h4 className="font-serif text-lg text-stone-200">Design & Shape</h4>
+          </div>
+          <p className="text-stone-400 text-sm font-light leading-relaxed">
+            {shapeAndFeatures}
+          </p>
+        </div>
+
+        {/* Suitability */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-emerald-500 mb-4">
+            <Target className="w-5 h-5" />
+            <h4 className="font-serif text-lg text-stone-200">Best Suited For</h4>
+          </div>
+          <p className="text-stone-400 text-sm font-light leading-relaxed">
+            {suitability}
+          </p>
+        </div>
+
+        {/* Key Benefits */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-emerald-500 mb-4">
+            <Sparkles className="w-5 h-5" />
+            <h4 className="font-serif text-lg text-stone-200">Key Benefits</h4>
+          </div>
+          <ul className="space-y-2">
+            {keyBenefits.map((benefit, i) => (
+              <li key={i} className="flex items-start gap-2 text-stone-400 text-sm font-light leading-relaxed">
+                <span className="text-emerald-500/50 mt-1">•</span>
+                <span>{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
       </div>
     </motion.div>
   );
